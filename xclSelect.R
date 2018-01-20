@@ -39,13 +39,22 @@ function(selection = list(), datapath) {
   }
   
   # Index Conversion
-  
-  rowkey <- 1:dim(data)[1]
-  function() {
-    n.col <- dim(data)[2]
-    for (i in 1:n.col) {
-      colkey <- append(aolkey, LETTERS[i])
-      if (i == " Z")
+  for (sel in selection) {
+    
+    topleft <- sel[1]
+    btmright <- sel[2]
+    
+    firstcol <- gsub("[0-9]", "", topleft)
+    firstrow <- as.numeric(gsub("[A-Z]", "", topleft))
+    lastcol <- gsub("[0-9]", "", btmright)
+    lastrow <- as.numeric(gsub("[A-Z]", "", btmright))
+    
+    index <- function(cell) {
+      if (nchar(cell) == 1)
+        col.n <- grep(firstcol, LETTERS)
+      else
+        col.n <- (grep(substr(cell, 1, 1), LETTERS) * 26) + grep(substr(cell, 2, 2), LETTERS)
+      return(col.n)
     }
   }
 }

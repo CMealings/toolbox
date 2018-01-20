@@ -1,5 +1,6 @@
 openToolbox <- function() {
-  toolbox <- list.files("E:/Users/WARC/CM/code/toolbox/")
+  path <- Sys.getenv("TOOLBOX")
+  toolbox <- grep(".R$", list.files(path), value = TRUE)
   for (tool in toolbox)
-    source(paste0("E:/Users/WARC/CM/code/toolbox/", tool))
+    source(paste0(path, "\\", tool))
 }
